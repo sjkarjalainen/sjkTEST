@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samu Karjalainen | Industrial & Visual Designer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #FF7A00; /* Valtra/Samu Orange */
+            --font-main: 'Inter', sans-serif;
+            --container-width: 1200px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        /* --- UI UTILS --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid var(--text-muted);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 12px;
+            margin-bottom: 12px;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-dark);
+            border-color: var(--text-main);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* --- 1. HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at 50% 30%, #1a1a1a 0%, #0a0a0a 70%);
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            text-align: center;
+            opacity: 0; /* JS Fade in */
+            transform: translateY(30px);
+        }
+
+        .hero-portrait {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: #222; /* Placeholder */
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            animation: bounce 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* --- 2. TRACTOR & AWARDS SECTION --- */
+        .tractor-section {
+            min-height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 80px 0;
+            perspective: 1000px; /* For 3D rotation */
+        }
+
+        .tractor-container {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 60px;
+            /* Placeholder styling for the 3D asset */
+        }
+
+        .tractor-model {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform-style: preserve-3d;
+            /* Initial state handled by GSAP */
+        }
+
+        /* Filmstrip */
+        .filmstrip-wrapper {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            padding: 24px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .filmstrip {
+            display: flex;
+            width: max-content;
+            gap: 60px;
+            animation: scroll 30s linear infinite;
+        }
+
+        .filmstrip:hover {
+            animation-play-state: paused;
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .award-item img {
+            height: 40px;
+            filter: grayscale(100%) brightness(1.5);
+            transition: var(--transition);
+        }
+        
+        .award-item:hover img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Assuming content is duplicated */
+        }
+
+        /* --- 3. ABOUT SECTION --- */
+        .about-section {
+            background: white;
+            color: var(--bg-dark);
+            padding: 120px 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .about-text p.small {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* --- 4. CV SECTION --- */
+        .cv-section {
+            padding: 120px 0;
+            background: var(--bg-dark);
+        }
+
+        .cv-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 40px;
+            margin-bottom: 80px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 80px;
+        }
+
+        .cv-grid:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .cv-item {
+            margin-bottom: 40px;
+        }
+
+        .cv-item h3 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .cv-meta {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .cv-desc {
+            color: var(--text-muted);
+            max-width: 700px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            width: 100%;
+        }
+
+        .skill-category h4 {
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .skill-category li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* --- 5. CASE STUDY (VALTRA) --- */
+        .case-study {
+            padding: 120px 0;
+            background: #0f0f0f;
+        }
+
+        .case-header {
+            width: 100%;
+            height: 60vh;
+            background: #222;
+            margin-bottom: 60px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .case-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        .case-intro h2 {
+            font-size: 3rem;
+            margin-bottom: 24px;
+        }
+
+        .case-details h4 {
+            color: var(--text-main);
+            margin-bottom: 12px;
+            margin-top: 32px;
+        }
+        
+        .case-details h4:first-child { margin-top: 0; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            background: #000;
+            margin-top: 60px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- 6. PROJECTS GRID --- */
+        .projects-section {
+            padding: 120px 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            group;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .project-img {
+            height: 250px;
+            background: #222;
+            width: 100%;
+            object-fit: cover;
+            /* Placeholder color if image fails */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .project-info {
+            padding: 24px;
+        }
+
+        .project-info h3 {
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .project-tags {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+        }
+
+        /* --- 7. AWARDS WALL --- */
+        .awards-wall {
+            padding: 100px 0;
+            background: #0f0f0f;
+            text-align: center;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+            align-items: baseline;
+        }
+
+        .award-block {
+            padding: 24px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .award-block:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+        }
+
+        .award-logo {
+            height: 60px;
+            width: auto;
+            margin-bottom: 16px;
+            /* Placeholder styling */
+            background: #fff; 
+            padding: 5px;
+        }
+
+        /* --- 8. FOOTER --- */
+        .footer {
+            padding: 120px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 70%);
+        }
+
+        .footer h2 {
+            font-size: 4rem;
+            margin-bottom: 24px;
+        }
+
+        .footer-desc {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .contact-links {
+            margin-bottom: 40px;
+        }
+
+        .footer-bottom {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .about-grid, .case-content-grid, .cv-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            h1 { font-size: 3rem; }
+            .hero-subtitle { font-size: 1.5rem; }
+            .case-intro h2 { font-size: 2rem; }
+            .footer h2 { font-size: 2.5rem; }
+        }
+        
+        /* Animation Utility Class */
+        .gsap-fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <img src="https://ui-avatars.com/api/?name=Samu+Karjalainen&background=222&color=fff&size=200" alt="Samu Karjalainen" class="hero-portrait">
+            
+            <h1>SAMU KARJALAINEN</h1>
+            <div class="hero-subtitle">Industrial & Visual Designer</div>
+            <p class="hero-tagline">Designing intuitive human–machine interfaces and visually refined digital experiences.</p>
+        </div>
+        <div class="scroll-indicator">Scroll to explore ↓</div>
+    </section>
+
+    <section class="tractor-section">
+        <div class="tractor-container">
+            <img src="https://www.valtra.com/images/default-source/products/s-series/valtra-s-series-front-left.png" 
+                 alt="Valtra S Series" 
+                 class="tractor-model tractor-3d"
+                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color:white; font-size:2rem; border:1px solid #333; padding:40px;\'>[3D TRACTOR MODEL RENDER]</div>'">
+        </div>
+
+        <div class="filmstrip-wrapper">
+            <div class="filmstrip">
+                <div class="award-item"><span style="font-size:24px">🔴</span> Red Dot Best of the Best 2025</div>
+                <div class="award-item"><span style="font-size:24px">🏆</span> iF Design Award 2025</div>
+                <div class="award-item"><span style="font-size:24px">⭐</span> Good Design Award 2024</div>
+                <div class="award-item"><span style="font-size:24px">🚜</span> Tractor of the Year 2024</div>
+                <div class="award-item"><span style="font-size:24px">🎨</span> Fennia Prize Winner</div>
+                
+                <div class="award-item"><span style="font-size:24px">🔴</span> Red Dot Best of the Best 2025</div>
+                <div class="award-item"><span style="font-size:24px">🏆</span> iF Design Award 2025</div>
+                <div class="award-item"><span style="font-size:24px">⭐</span> Good Design Award 2024</div>
+                <div class="award-item"><span style="font-size:24px">🚜</span> Tractor of the Year 2024</div>
+                <div class="award-item"><span style="font-size:24px">🎨</span> Fennia Prize Winner</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div>
+                    <h2 class="section-title">About</h2>
+                </div>
+                <div class="about-text gsap-fade-up">
+                    <p>I am a multidisciplinary designer based in Jyväskylä, Finland, working at the intersection of industrial design, UI/UX, HMI systems, and 3D visualization.</p>
+                    <p class="small">Over the past decade I have designed digital interfaces for heavy machinery and complex professional tools, with a focus on clarity, usability, and visual refinement. My recent work centers around Valtra’s next-generation human–machine interfaces, where I have been responsible for the complete visual and interaction design of the Valtra Smart Display.</p>
+                    <p class="small">I enjoy designing systems where physical controls and digital interfaces feel like one coherent product. My strength lies in refining details all the way from first concept sketches to production-ready design systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cv-section">
+        <div class="container">
+            
+            <div class="cv-grid gsap-fade-up">
+                <div><h2 class="section-title">Experience</h2></div>
+                <div>
+                    <div class="cv-item">
+                        <h3>Valtra Inc., AGCO Corporation</h3>
+                        <span class="cv-meta">Industrial Designer / HMI (2017–Present)</span>
+                        <div class="cv-desc">
+                            Lead designer for the Valtra Smart Display UI, responsible for UI logic, visual system, interaction flows, iconography, 3D content, menu architecture and component library. Designed a complete HMI system used across S, Q, N and G Series.
+                        </div>
+                    </div>
+                    <div class="cv-item">
+                        <h3>Self-Employed Designer</h3>
+                        <span class="cv-meta">Freelance (2016–2021)</span>
+                        <div class="cv-desc">
+                            One-person studio offering branding, visual design, product visualization and web design.
+                        </div>
+                    </div>
+                    <div class="cv-item">
+                        <h3>Komia Design Corp.</h3>
+                        <span class="cv-meta">Junior Designer & Trainee (2013–2016)</span>
+                        <div class="cv-desc">
+                            3D modeling, concepting, technical drawings and visualization for clients including Pole Bicycles and Kiho/Mastercom.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cv-grid gsap-fade-up">
+                <div><h2 class="section-title">Skills</h2></div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>UI/UX & HMI</h4>
+                        <ul>
+                            <li>Interaction design</li>
+                            <li>UX flows & prototyping</li>
+                            <li>Design systems</li>
+                            <li>Component libraries</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Visual & 3D</h4>
+                        <ul>
+                            <li>Visual refinement</li>
+                            <li>Iconography</li>
+                            <li>3D modeling (Creo)</li>
+                            <li>Rendering (KeyShot)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Industrial & Systems</h4>
+                        <ul>
+                            <li>Physical–digital integration</li>
+                            <li>HMI ergonomics</li>
+                            <li>Concept development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cv-grid gsap-fade-up">
+                <div><h2 class="section-title">Education</h2></div>
+                <div>
+                    <div class="cv-item">
+                        <h3>Bachelor of Industrial & Product Design</h3>
+                        <span class="cv-meta">Turku University of Applied Sciences</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="case-study">
+        <div class="case-header">
+            <img src="https://www.valtra.com/images/default-source/smarttouch/smarttouch-screen.jpg" 
+                 alt="Valtra Smart Display"
+                 onerror="this.parentElement.style.background='#222'; this.style.display='none';">
+            <div style="position:absolute; bottom:40px; left:40px; z-index:2;">
+                <h2 style="font-size:3rem; color:white;">Valtra Smart Display</h2>
+                <span style="color:var(--accent);">Case Study</span>
+            </div>
+            <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);"></div>
+        </div>
+
+        <div class="container">
+            <div class="case-content-grid gsap-fade-up">
+                <div class="case-intro">
+                    <h2>Overview</h2>
+                    <p style="color:var(--text-muted); font-size:1.1rem;">The Valtra Smart Display is the primary digital interface in Valtra’s newest tractor generation. It brings machine data, settings, guidance and implement control together in one cohesive HMI.</p>
+                </div>
+                <div class="case-details">
+                    <h4>Role & Responsibilities</h4>
+                    <p style="color:var(--text-muted);">Complete UI design (logic, flows), Visual system, Iconography, 3D content, Menu architecture.</p>
+
+                    <h4>Challenges</h4>
+                    <p style="color:var(--text-muted);">Limited graphics capabilities, strict performance constraints, and integration with physical SmartTouch controls.</p>
+
+                    <h4>Outcome</h4>
+                    <p style="color:var(--text-muted);">Contributed to Red Dot, iF Design, and Good Design awards.</p>
+                </div>
+            </div>
+
+            <div class="video-container gsap-fade-up">
+                <iframe src="https://www.youtube.com/embed/-eCfurG8LsI" title="Valtra Smart Display" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Selected Projects</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card gsap-fade-up">
+                    <div class="project-img">
+                        <span>Project Render 01</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Heavy Machinery Dashboard</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">Concept interface for forestry equipment.</p>
+                        <div class="project-tags">UI/UX • Concept</div>
+                    </div>
+                </div>
+
+                <div class="project-card gsap-fade-up">
+                    <div class="project-img">
+                        <span>Project Render 02</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Medical Device HMI</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">Clean interface for laboratory analysis tools.</p>
+                        <div class="project-tags">Industrial Design • UI</div>
+                    </div>
+                </div>
+
+                <div class="project-card gsap-fade-up">
+                    <div class="project-img">
+                        <span>Project Render 03</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Pole Bicycles Visualization</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">3D marketing assets for new bike frame.</p>
+                        <div class="project-tags">3D Visualization</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="awards-wall">
+        <div class="container">
+            <h2 class="section-title" style="text-align:center;">Recognition</h2>
+            <div class="awards-grid gsap-fade-up">
+                <a href="#" class="award-block">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Red_Dot_Design_Award_logo.svg" alt="Red Dot" class="award-logo">
+                    <p>Best of the Best 2025</p>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Valtra S Series</span>
+                </a>
+                <a href="#" class="award-block">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/If_design_award_logo.svg" alt="iF Design" class="award-logo">
+                    <p>Design Award 2025</p>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Valtra S Series</span>
+                </a>
+                <a href="#" class="award-block">
+                    <div class="award-logo" style="display:flex;align-items:center;justify-content:center;font-weight:bold;color:black;">GOOD DESIGN</div>
+                    <p>Good Design 2024</p>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Valtra S Series</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h4 class="section-title">Contact</h4>
+            <h2>LET’S TALK</h2>
+            <p class="footer-desc">I'm always open to discussing new projects, collaborations or roles involving UI/UX, industrial design or HMI systems.</p>
+            
+            <div class="contact-links">
+                <a href="#" class="btn btn-primary">Download CV (PDF)</a>
+                <a href="#" class="btn">Download CV (PNG)</a>
+            </div>
+
+            <div>
+                <a href="mailto:email@example.com" class="btn">Email</a>
+                <a href="#" class="btn">LinkedIn</a>
+            </div>
+
+            <div class="footer-bottom">
+                &copy; 2025 Samu Karjalainen. All rights reserved.<br>
+                Based in Jyväskylä, Finland.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Hero Animation
+            const tl = gsap.timeline();
+            tl.to(".hero-content", {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+
+            // Hero Parallax
+            gsap.to(".hero-portrait", {
+                yPercent: 50,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // 2. Tractor Rotation Simulation
+            // We rotate the image on the Y axis as user scrolls
+            gsap.to(".tractor-3d", {
+                rotateY: 40,
+                scale: 1.1,
+                scrollTrigger: {
+                    trigger: ".tractor-section",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1
+                }
+            });
+
+            // 3. General Fade Up for Sections
+            // Select all elements with class 'gsap-fade-up'
+            const fadeElements = document.querySelectorAll(".gsap-fade-up");
+            
+            fadeElements.forEach(el => {
+                gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%", // Trigger when top of element is at 85% of viewport
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+
+            // 4. Awards Wall Stagger
+            gsap.from(".award-block", {
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: ".awards-wall",
+                    start: "top 80%"
+                }
+            });
+        });
+    </script>
+</body>
+</html>
