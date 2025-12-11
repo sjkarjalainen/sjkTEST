@@ -85,7 +85,8 @@ a {
 
 /* --- 1. HERO SECTION --- */
 .hero {
-    height: 100vh;
+    height: 50vh;     /* <-- NEW VALUE (50% viewport height) */
+    min-height: 500px; /* Recommended: Ensures it doesn't get too cramped on very short screens */
     width: 100%;
     display: flex;
     align-items: center;
