@@ -95,21 +95,32 @@ a {
     overflow: hidden;
 }
 
+/* style.css */
 .hero-bg-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    
+    /* Centering logic */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    
+    /* THE SIZE: Adjust these to change how "small" the image looks */
+    width: 50vw;   /* 50% of viewport width */
+    height: 60vh;  /* 60% of viewport height */
+    
     z-index: 0;
-    overflow: hidden;
+    overflow: hidden; /* Ensures the image stays inside this small box */
+    
+    /* Optional: Smooth corners for a modern look */
+    /* border-radius: 8px; */ 
 }
 
+/* style.css */
 .hero-portrait {
     width: 100%;
-    height: 120%; /* Taller than container for parallax movement */
+    height: 120%; /* Keep this >100% so it can move (parallax) inside the wrapper */
     object-fit: cover;
-    object-position: center top;
+    object-position: center; 
     position: absolute;
     top: 0;
     left: 0;
