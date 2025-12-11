@@ -152,7 +152,7 @@ a {
 
 .hero-name {
   /* Responsive Scaling: Min 24px, Preferred 3vw, Max 48px */
-  font-size: clamp(24px, 3vw, 48px);
+  font-size: clamp(24px, 3vw, 38px);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 700;
