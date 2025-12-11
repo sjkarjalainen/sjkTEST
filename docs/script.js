@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         ease: "power3.out"
     });
 
-/* gsap.to(".hero-portrait", {
+/gsap.to(".hero-portrait", {
     yPercent: 15, 
     ease: "none",
     scrollTrigger: {
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         scrub: true
     }
 });
-*/
 
     // 3. Tractor Rotation Simulation
     gsap.to(".tractor-3d", {
