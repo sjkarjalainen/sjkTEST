@@ -98,7 +98,7 @@
             color: white;
         }
 
-        /* --- 1. HERO SECTION --- */
+        /* --- 1. HERO SECTION (UPDATED) --- */
         .hero {
             height: 100vh;
             width: 100%;
@@ -106,8 +106,44 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: radial-gradient(circle at 50% 30%, #1a1a1a 0%, #0a0a0a 70%);
+            background: #000;
             overflow: hidden;
+        }
+
+        .hero-bg-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-portrait {
+            width: 100%;
+            height: 120%; /* Taller than container for parallax movement */
+            object-fit: cover;
+            object-position: center top;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Dark overlay to ensure text legibility on top of image */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom, 
+                rgba(0,0,0,0.2) 0%, 
+                rgba(0,0,0,0.6) 60%, 
+                rgba(0,0,0,0.9) 100%
+            );
+            z-index: 1;
         }
 
         .hero-content {
@@ -115,36 +151,34 @@
             text-align: center;
             opacity: 0; /* JS Fade in */
             transform: translateY(30px);
-        }
-
-        .hero-portrait {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 32px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            background: #222; 
+            padding: 0 20px;
+            max-width: 900px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Lift text off image */
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            letter-spacing: -0.02em;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            letter-spacing: -0.03em;
             margin-bottom: 8px;
+            line-height: 1;
         }
 
         .hero-subtitle {
             font-size: clamp(1.2rem, 2.5vw, 2rem);
             color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 24px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .hero-tagline {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 600px;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: #e0e0e0;
+            max-width: 700px;
             margin: 0 auto;
+            font-weight: 300;
+            line-height: 1.5;
         }
 
         .scroll-indicator {
@@ -152,10 +186,13 @@
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.7);
             font-size: 0.9rem;
             animation: bounce 2s infinite;
             z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.75rem;
         }
 
         @keyframes bounce {
@@ -174,7 +211,7 @@
             justify-content: center;
             position: relative;
             padding: 80px 0;
-            perspective: 1000px; /* For 3D rotation */
+            perspective: 1000px;
         }
 
         .tractor-container {
@@ -435,7 +472,6 @@
             background: #222;
             width: 100%;
             object-fit: cover;
-            /* Placeholder color if image fails */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -490,7 +526,6 @@
             height: 60px;
             width: auto;
             margin-bottom: 16px;
-            /* Placeholder styling */
             background: #fff; 
             padding: 5px;
         }
@@ -537,9 +572,13 @@
             .hero-subtitle { font-size: 1.5rem; }
             .case-intro h2 { font-size: 2rem; }
             .footer h2 { font-size: 2.5rem; }
+            
+            .hero-portrait {
+                /* On mobile, we might want to ensure the face is visible */
+                object-position: center top; 
+            }
         }
         
-        /* Animation Utility Class */
         .gsap-fade-up {
             opacity: 0;
             transform: translateY(40px);
@@ -550,13 +589,17 @@
 <body>
 
     <section class="hero">
-        <div class="hero-content">
+        <div class="hero-bg-wrapper">
             <img src="samu2.png" alt="Samu Karjalainen" class="hero-portrait">
-            
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
             <h1>SAMU KARJALAINEN</h1>
             <div class="hero-subtitle">Industrial & Visual Designer</div>
             <p class="hero-tagline">Designing intuitive human–machine interfaces and visually refined digital experiences.</p>
         </div>
+        
         <div class="scroll-indicator">Scroll to explore ↓</div>
     </section>
 
@@ -812,9 +855,10 @@
                 ease: "power3.out"
             });
 
-            // Hero Parallax
+            // Hero Parallax (Modified for Fullscreen)
+            // Moves the background image slightly slower than scroll to create depth
             gsap.to(".hero-portrait", {
-                yPercent: 50,
+                yPercent: 15, // Move image down by 15% as we scroll
                 ease: "none",
                 scrollTrigger: {
                     trigger: ".hero",
@@ -825,7 +869,6 @@
             });
 
             // 2. Tractor Rotation Simulation
-            // We rotate the image on the Y axis as user scrolls
             gsap.to(".tractor-3d", {
                 rotateY: 40,
                 scale: 1.1,
@@ -838,7 +881,6 @@
             });
 
             // 3. General Fade Up for Sections
-            // Select all elements with class 'gsap-fade-up'
             const fadeElements = document.querySelectorAll(".gsap-fade-up");
             
             fadeElements.forEach(el => {
@@ -849,7 +891,7 @@
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 85%", // Trigger when top of element is at 85% of viewport
+                        start: "top 85%", 
                         toggleActions: "play none none reverse"
                     }
                 });
