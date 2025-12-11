@@ -153,17 +153,25 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
     background: #000;
     padding: 100px 0;
     border-bottom: 1px solid #1a1a1a;
+    overflow: hidden; /* Prevents scrollbars if image is huge */
 }
 .s-tractor-visual {
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
+    width: 100%;
+    padding: 0 20px; /* Small safety padding on mobile */
 }
 .tractor-still {
-    max-width: 900px;
+    max-width: 1800px;
     width: 100%;
     height: auto;
+
+    /* Optional: Add a subtle fade/scale up effect */
+    transform-origin: center center;
+    animation: fadeIn 1.5s ease-out;
 }
+
 
 /* Awards Strip */
 .filmstrip-wrapper {
