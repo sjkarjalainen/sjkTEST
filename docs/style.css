@@ -151,56 +151,96 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 /* --- 2. TRACTOR SECTION --- */
 .tractor-section {
     background: #000;
-    padding: 100px 0;
+    /* Reduced bottom padding since reel overlaps */
+    padding: 100px 0 0 0; 
     border-bottom: 1px solid #1a1a1a;
-    overflow: hidden; /* Prevents scrollbars if image is huge */
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 .s-tractor-visual {
     display: flex;
     justify-content: center;
-    margin-bottom: 60px;
     width: 100%;
-    padding: 0 20px; /* Small safety padding on mobile */
+    padding: 0 20px;
+    /* Ensure image is behind the text */
+    position: relative;
+    z-index: 1; 
 }
+
 .tractor-still {
     max-width: 1800px;
     width: 100%;
     height: auto;
-
-    /* Optional: Add a subtle fade/scale up effect */
-    transform-origin: center center;
-    animation: fadeIn 1.5s ease-out;
+    display: block;
 }
 
-
-/* Awards Strip */
+/* --- AWARDS REEL (UPDATED) --- */
 .filmstrip-wrapper {
     width: 100%;
     overflow: hidden;
-    background: #050505;
-    padding: 24px 0;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
+    /* REMOVED: Background color and Borders */
+    background: transparent; 
+    border: none;
+    
+    /* OVERLAP LOGIC */
+    margin-top: -15%; /* Pulls the reel up over the image (responsive) */
+    position: relative;
+    z-index: 5; /* Sits ON TOP of the tractor image */
+    
+    /* Extra padding to let descenders in text breathe */
+    padding-bottom: 80px; 
 }
+
 .filmstrip {
     display: flex;
     width: max-content;
-    gap: 60px;
-    animation: scroll 30s linear infinite;
+    /* Increased gap for larger items */
+    gap: 120px; 
+    animation: scroll 40s linear infinite; /* Slower speed for readability */
 }
+
 .award-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    color: #888;
-    font-weight: 500;
-}
-.award-item img {
-    height: 32px;
-    width: auto;
-    filter: grayscale(100%) invert(1) brightness(0.6);
+    gap: 30px; /* More space between logo and text */
+    color: rgba(255, 255, 255, 0.9); /* Brighter text for contrast over image */
+    font-weight: 700; /* Bolder text */
+    
+    /* 3X LARGER TEXT */
+    font-size: clamp(2rem, 4vw, 4rem); 
+    
+    /* Text Shadow to ensure readability over the tractor image */
+    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    white-space: nowrap;
 }
 
+.award-item img {
+    /* 3X LARGER LOGOS */
+    height: 90px; /* Was 32px -> approx 3x */
+    width: auto;
+    
+    /* Monochrome filter (Bright white to stand out over dark image) */
+    filter: grayscale(100%) brightness(200%) drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+}
+
+/* --- MOBILE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+    .filmstrip-wrapper {
+        margin-top: -80px; /* Less overlap on mobile */
+        padding-bottom: 40px;
+    }
+    
+    .award-item {
+        gap: 15px;
+    }
+    
+    /* Still keep it relatively large on mobile, but safe */
+    .award-item img { height: 50px; } 
+}
 /* --- 3. ABOUT SECTION --- */
 .about-section {
     background: white;
