@@ -85,86 +85,55 @@ a {
 
 /* --- 1. HERO SECTION --- */
 
-/* --- HERO SECTION LAYOUT --- */
+/* --- HERO SECTION --- */
 .hero-section {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Premium Dark Gradient Background */
   background: linear-gradient(180deg, #000000 0%, #111111 100%);
-  color: #ffffff; /* Default text color switched to white */
+  color: #ffffff;
   padding: 0 5%;
   overflow: hidden;
   position: relative;
 }
 
 .hero-container {
-  /* Reduced gap from 5vw to 3vw (approx 30% tighter) */
-  gap: 3vw; 
-  
-  /* Existing styles preserved */
   display: grid;
   grid-template-columns: 0.8fr 1fr;
+  /* CHANGE 1: Gap reduced from 5vw to 3vw (approx 30% tighter) */
+  gap: 3vw; 
   max-width: 1600px;
   width: 100%;
   height: 100vh;
   align-items: center;
 }
 
-/* --- DESKTOP IMAGE POSITIONING --- */
-/* Applies the vertical shift only on larger screens */
-@media (min-width: 1024px) {
-  .hero-image-wrapper {
-    /* Since the wrapper uses "align-items: flex-end", adding padding 
-       to the bottom pushes the image up by 50px.
-       This avoids conflicts with the fade-in transform animation.
-    */
-    padding-bottom: 50px; 
-    
-    /* Ensure the image is visually close to the text */
-    justify-content: flex-start; /* Aligns image to the left edge of its column */
-    padding-left: 20px; /* Adds a tiny buffer so it doesn't touch the text */
-  }
-}
-
-/* --- MOBILE/TABLET SAFETY --- */
-/* Ensures the lift doesn't break mobile stacking */
-@media (max-width: 1023px) {
-  .hero-image-wrapper {
-    padding-bottom: 0;
-    justify-content: center; /* keep centered on mobile */
-    padding-left: 0;
-  }
-}
-
-/* --- TEXT COLUMN (LEFT) --- */
+/* --- HERO TEXT --- */
 .hero-text {
   text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  z-index: 2; /* Ensures text stays above image if they overlap slightly */
+  z-index: 2;
   animation: fadeUp 1s ease-out forwards;
   opacity: 0;
 }
 
 .hero-name {
-  /* Responsive Scaling: Min 24px, Preferred 3vw, Max 48px */
   font-size: clamp(24px, 3vw, 38px);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #ffffff; /*#888888 Muted grey for the name */
+  color: #888888;
   margin-bottom: 1.5rem;
   display: inline-block;
-  border-bottom: 2px solid #333; /* Optional stylistic line */
+  border-bottom: 3px solid #333; /* Optional stylistic line */
   padding-bottom: 0.5rem;
 }
 
 .hero-title {
-  /* Responsive Scaling: Min 36px, Preferred 5vw, Max 80px */
   font-size: clamp(36px, 5vw, 80px);
   line-height: 1.1;
   font-weight: 800;
@@ -174,14 +143,13 @@ a {
 }
 
 .text-accent {
-  color: #FF5722; /* Keeps your brand orange */
+  color: #FF5722;
 }
 
 .hero-description {
-  /* Responsive Scaling: Min 16px, Preferred 1.2vw, Max 20px */
   font-size: clamp(16px, 1.2vw, 20px);
   line-height: 1.7;
-  color: #cccccc; /* Light grey for readability on dark bg */
+  color: #cccccc;
   max-width: 480px;
   margin-bottom: 4rem;
   font-weight: 400;
@@ -196,24 +164,33 @@ a {
   animation: fadeUp 1s ease-out 0.5s forwards;
 }
 
-/* --- IMAGE COLUMN (RIGHT) --- */
+/* --- HERO IMAGE --- */
 .hero-image-wrapper {
   height: 100%;
   display: flex;
-  justify-content: center; /* Center horizontally in column */
-  align-items: flex-end; /* Align image to bottom of container */
+  align-items: flex-end;
   opacity: 0;
   animation: fadeIn 1.5s ease-out 0.2s forwards;
+  
+  /* CHANGE 2: Horizontal alignment */
+  justify-content: flex-start; /* Pulls image left, closer to text */
+  padding-left: 20px; /* Slight buffer so it doesn't touch the text */
+}
+
+/* CHANGE 3: Lift the image up on Desktop only */
+@media (min-width: 1024px) {
+  .hero-image-wrapper {
+    /* Adds padding to bottom, forcing the image up by 50px */
+    padding-bottom: 50px; 
+  }
 }
 
 .hero-img {
-  /* 85% of Viewport Height on Desktop */
-  height: 85vh; 
-  width: auto; /* Maintain aspect ratio */
+  height: 85vh;
+  width: auto;
   max-width: 100%;
   object-fit: contain;
-  /* Subtle drop shadow to lift image off the dark background */
-  filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5)); 
+  filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5));
 }
 
 /* --- ANIMATIONS --- */
@@ -227,66 +204,34 @@ a {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* --- RESPONSIVE (TABLET & MOBILE) --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
   .hero-container {
     height: auto;
     min-height: 100vh;
     padding-top: 60px;
-    align-items: center;
+    grid-template-columns: 1fr; /* Stack on tablet/mobile */
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
   }
   
-  .hero-img {
-    height: 60vh; /* Smaller image height on tablet */
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-section {
-    padding: 80px 20px 40px;
-    height: auto;
-    min-height: auto;
-  }
-
-  .hero-container {
-    display: flex;
-    flex-direction: column; /* Stack vertically */
-    gap: 3rem;
-    height: auto;
-  }
-
-  /* Reset alignment for mobile */
   .hero-text {
     text-align: center;
     align-items: center;
-    order: 1; /* Text first */
+    order: 1;
   }
   
   .hero-image-wrapper {
-    order: 2; /* Image second */
+    order: 2;
+    justify-content: center; /* Center image on mobile */
+    padding-left: 0;
+    padding-bottom: 0; /* Remove lift on mobile */
     width: 100%;
-    align-items: center;
   }
 
-  .hero-name {
-    margin-bottom: 1rem;
-    font-size: 14px; /* Fixed small size for mobile eyebrow */
-  }
-
-  .hero-title {
-    /* Slightly larger minimum for mobile impact */
-    font-size: clamp(32px, 8vw, 48px); 
-    max-width: 100%;
-  }
-
-  .hero-description {
-    margin-bottom: 2rem;
-  }
-  
   .hero-img {
     height: auto;
-    width: 100%;
-    max-width: 350px; /* Cap image width on mobile */
     max-height: 50vh;
   }
 }
