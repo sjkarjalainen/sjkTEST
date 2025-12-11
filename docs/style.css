@@ -349,52 +349,86 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 }
 
 /* --- 5. CASE STUDY (VALTRA) --- */
-.case-study {
+.case-study-section {
+    background: #0f0f0f; /* Matches your dark theme */
     padding: 120px 0;
-    background: #0f0f0f;
 }
 
-.case-header {
-    width: 100%;
-    height: 60vh;
-    background: #222;
-    margin-bottom: 60px;
-    overflow: hidden;
-    position: relative;
-}
-
-.case-header img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.case-content-grid {
+.case-study-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* This creates the Side-by-Side layout (Text Left, Image Right) */
+    grid-template-columns: 1fr 1fr; 
     gap: 80px;
-    margin-bottom: 80px;
+    align-items: center; /* Vertically centers the text against the image */
 }
 
-.case-intro h2 {
+/* Typography alignment */
+.case-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.case-label {
+    display: block;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.case-title {
     font-size: 3rem;
-    margin-bottom: 24px;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 40px;
 }
 
-.case-details h4 {
-    color: var(--text-main);
-    margin-bottom: 12px;
-    margin-top: 32px;
+/* The Grid for Overview, Role, Outcome */
+.case-stats {
+    display: grid;
+    gap: 30px;
+    /* Keeps the stats neatly stacked under the title */
 }
 
-.case-details h4:first-child { margin-top: 0; }
+.stat-block h4 {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-block p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* The Image Column */
+.case-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.case-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Optional: Subtle shadow to make it pop */
+    filter: drop-shadow(0px 20px 40px rgba(0,0,0,0.3));
+}
 
 .video-container {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
     height: 0;
     background: #000;
-    margin-top: 60px;
+    margin-top: 80px; /* Space between grid and video */
+    width: 100%;
 }
 
 .video-container iframe {
@@ -404,6 +438,20 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
     width: 100%;
     height: 100%;
     border: 0;
+}
+
+/* RESPONSIVE: Stack vertically on mobile */
+@media (max-width: 1024px) {
+    .case-study-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .case-image {
+        order: 2; /* Puts image below text on mobile */
+    }
+    .case-title {
+        font-size: 2.5rem;
+    }
 }
 
 /* --- 5. PROJECTS --- */
