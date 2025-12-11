@@ -95,35 +95,29 @@ a {
     overflow: hidden;
 }
 
-/* style.css */
 .hero-bg-wrapper {
     position: absolute;
-    
-    /* Centering logic */
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     
-    /* THE SIZE: Adjust these to change how "small" the image looks */
-    width: 50vw;   /* 50% of viewport width */
-    height: 60vh;  /* 60% of viewport height */
-    
+    /* UPDATED: Constrain height, but let width adjust naturally */
+    height: 65vh;       
+    width: auto;        
+    aspect-ratio: 3/4;  /* Optional: Forces a nice portrait shape */
+    max-width: 90vw;    /* Prevents it from being too wide on mobile */
+
     z-index: 0;
-    overflow: hidden; /* Ensures the image stays inside this small box */
-    
-    /* Optional: Smooth corners for a modern look */
-    /* border-radius: 8px; */ 
+    /* Remove overflow:hidden so we don't accidentally clip shadows/edges */
+    /* overflow: hidden; */ 
 }
 
-/* style.css */
 .hero-portrait {
     width: 100%;
-    height: 120%; /* Keep this >100% so it can move (parallax) inside the wrapper */
-    object-fit: cover;
-    object-position: center; 
-    position: absolute;
-    top: 0;
-    left: 0;
+    height: 100%;          /* Changed from 120% to 100% to stop the vertical crop */
+    object-fit: contain;   /* Changed from cover. This ensures the WHOLE image is seen */
+    object-position: bottom center; /* Aligns image to bottom */
+    display: block;
 }
 
 /* Dark overlay to ensure text legibility on top of image */
