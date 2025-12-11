@@ -11,17 +11,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
         ease: "power3.out"
     });
 
-    // 2. Hero Parallax (Moves image slower than scroll)
-    gsap.to(".hero-portrait", {
-        yPercent: 15, // Move image down by 15% as we scroll
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-        }
-    });
+/* gsap.to(".hero-portrait", {
+    yPercent: 15, 
+    ease: "none",
+    scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+    }
+});
+*/
 
     // 3. Tractor Rotation Simulation
     gsap.to(".tractor-3d", {
