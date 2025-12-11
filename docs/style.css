@@ -6,637 +6,315 @@
     --text-muted: #a0a0a0;
     --accent: #FF7A00; /* Valtra/Samu Orange */
     --font-main: 'Inter', sans-serif;
-    --container-width: 1200px;
+    --container-max: 1200px;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: var(--font-main);
     line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; /* Prevents horizontal scrollbar */
+    display: block; /* CRITICAL: Ensures sections stack vertically */
+    width: 100%;
 }
 
-h1, h2, h3, h4 {
-    font-weight: 700;
-    line-height: 1.2;
-}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; transition: var(--transition); }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    transition: var(--transition);
-}
-
+/* --- REUSABLE UTILITIES --- */
 .container {
-    max-width: var(--container-width);
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 24px;
-    position: relative;
-}
-
-.accent {
-    color: var(--accent);
-}
-
-/* --- UI UTILS --- */
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    border: 1px solid var(--text-muted);
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-right: 12px;
-    margin-bottom: 12px;
-}
-
-.btn:hover {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: #fff;
-}
-
-.btn-primary {
-    background: var(--text-main);
-    color: var(--bg-dark);
-    border-color: var(--text-main);
-}
-
-.btn-primary:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-}
-
-/* --- 1. HERO SECTION --- */
-
-/* --- HERO SECTION --- */
-.hero-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, #000000 0%, #111111 100%);
-  color: #ffffff;
-  padding: 0 5%;
-  overflow: hidden;
-  position: relative;
-}
-
-.hero-container {
-  display: grid;
-  grid-template-columns: 0.8fr 1fr;
-  /* CHANGE 1: Gap reduced from 5vw to 3vw (approx 30% tighter) */
-  gap: 3vw; 
-  max-width: 1600px;
-  width: 100%;
-  height: 100vh;
-  align-items: center;
-}
-
-/* --- HERO TEXT --- */
-.hero-text {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  z-index: 2;
-  animation: fadeUp 1s ease-out forwards;
-  opacity: 0;
-}
-
-.hero-name {
-  font-size: clamp(24px, 3vw, 38px);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #888888;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-  border-bottom: 3px solid #333; /* Optional stylistic line */
-  padding-bottom: 0.5rem;
-}
-
-.hero-title {
-  font-size: clamp(36px, 5vw, 80px);
-  line-height: 1.1;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 2rem 0;
-  max-width: 800px;
-}
-
-.text-accent {
-  color: #FF5722;
-}
-
-.hero-description {
-  font-size: clamp(16px, 1.2vw, 20px);
-  line-height: 1.7;
-  color: #cccccc;
-  max-width: 480px;
-  margin-bottom: 4rem;
-  font-weight: 400;
-}
-
-.scroll-indicator {
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  color: #555555;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: fadeUp 1s ease-out 0.5s forwards;
-}
-
-/* --- HERO IMAGE --- */
-.hero-image-wrapper {
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  opacity: 0;
-  animation: fadeIn 1.5s ease-out 0.2s forwards;
-  
-  /* CHANGE 2: Horizontal alignment */
-  justify-content: flex-start; /* Pulls image left, closer to text */
-  padding-left: 20px; /* Slight buffer so it doesn't touch the text */
-}
-
-/* CHANGE 3: Lift the image up on Desktop only */
-@media (min-width: 1024px) {
-  .hero-image-wrapper {
-    /* Adds padding to bottom, forcing the image up by 50px */
-    padding-bottom: 50px; 
-  }
-}
-
-.hero-img {
-  height: 85vh;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5));
-}
-
-/* --- ANIMATIONS --- */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 1024px) {
-  .hero-container {
-    height: auto;
-    min-height: 100vh;
-    padding-top: 60px;
-    grid-template-columns: 1fr; /* Stack on tablet/mobile */
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-  }
-  
-  .hero-text {
-    text-align: center;
-    align-items: center;
-    order: 1;
-  }
-  
-  .hero-image-wrapper {
-    order: 2;
-    justify-content: center; /* Center image on mobile */
-    padding-left: 0;
-    padding-bottom: 0; /* Remove lift on mobile */
     width: 100%;
-  }
-
-  .hero-img {
-    height: auto;
-    max-height: 50vh;
-  }
 }
 
-/* --- 2. TRACTOR & AWARDS SECTION --- */
-/* --- TRACTOR SECTION & AWARDS --- */
-.tractor-section {
-    min-height: 80vh; /* Gives the section substantial weight */
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 60px 0 80px; /* Balanced top/bottom padding */
-    overflow: hidden; 
-}
-
-/* Container for the Visual (Static or Animation) */
-.s-tractor-visual {
-    width: 100%;
-    max-width: 1200px; /* Wide container to give the image breathing room */
-    padding: 0 20px;   /* Safety padding for mobile edges */
-    margin-bottom: 60px; /* Space between tractor and awards */
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* These properties help if you switch to absolute positioning for animation frames later */
-    position: relative; 
-    aspect-ratio: 16/9; /* Optional: Reserves space to prevent layout shift */
-    max-height: 70vh;
-}
-
-/* The Image Itself */
-.tractor-still {
-    width: 100%;
-    max-width: 900px; /* Targeted max-width as requested */
-    height: auto;
-    object-fit: contain;
-    display: block;
-    
-    /* Smooth fade in (optional, matches your site style) */
-    opacity: 0;
-    animation: fadeIn 1.5s ease-out forwards;
-}
-
-/* --- AWARDS STRIP STYLING --- */
-
-.award-item {
-    display: flex;
-    align-items: center;
-    gap: 16px; /* Space between logo and text */
-    
-    /* Monochrome Color for Text */
-    color: #888888; 
-    
-    font-weight: 500;
-    font-size: 1rem; /* Adjust text size */
-    white-space: nowrap;
-    transition: color 0.3s ease;
-}
-
-.award-item img {
-    height: 32px; /* Fixed height for consistent logo size */
-    width: auto;  /* Auto width to maintain aspect ratio */
-    
-    /* THE MONOCHROME FILTER:
-       1. grayscale(100%): Removes all color (Red Dot becomes grey).
-       2. invert(1): Turns dark/black parts of logos into white.
-       3. brightness(0.6): Dims the bright white down to a premium grey (#888).
-    */
-    filter: grayscale(100%) invert(1) brightness(0.6);
-    
-    transition: filter 0.3s ease;
-}
-
-/* Optional: Subtle hover effect to highlight the award */
-.award-item:hover {
-    color: #ffffff; /* Text turns white */
-}
-
-.award-item:hover img {
-    /* Logo turns white/original on hover */
-    filter: grayscale(0%) invert(0) brightness(1.2); 
-    /* OR keep it monochrome but brighter: */
-    /* filter: grayscale(100%) invert(1) brightness(1); */
-}
-
-/* Responsive Tweaks */
-@media (max-width: 768px) {
-    .s-tractor-visual {
-        margin-bottom: 40px;
-        aspect-ratio: auto; /* Let height be natural on mobile */
-    }
-    
-    .tractor-still {
-        max-width: 100%; /* Full width on mobile */
-    }
-}
-
-/* --- 3. ABOUT SECTION --- */
-.about-section {
-    background: white;
-    color: var(--bg-dark);
-    padding: 120px 0;
-}
-
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 60px;
-}
-
-.section-title {
-    font-size: 1rem;
+.section-label {
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--accent);
-    margin-bottom: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.section-heading {
+    font-size: 2rem;
+    margin-bottom: 40px;
     font-weight: 700;
 }
 
-.about-text p {
-    font-size: 1.5rem;
-    line-height: 1.5;
-    margin-bottom: 32px;
-    font-weight: 400;
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 5px;
 }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { background: var(--text-main); color: var(--bg-dark); border-color: var(--text-main); }
+.btn-primary:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-.about-text p.small {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-/* --- 4. CV SECTION --- */
-.cv-section {
-    padding: 120px 0;
-    background: var(--bg-dark);
-}
-
-.cv-grid {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 40px;
-    margin-bottom: 80px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 80px;
-}
-
-.cv-grid:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
-.cv-item {
-    margin-bottom: 40px;
-}
-
-.cv-item h3 {
-    font-size: 1.25rem;
-    margin-bottom: 4px;
-    color: #fff;
-}
-
-.cv-meta {
-    color: var(--accent);
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-    display: block;
-}
-
-.cv-desc {
-    color: var(--text-muted);
-    max-width: 700px;
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    width: 100%;
-}
-
-.skill-category h4 {
-    color: var(--accent);
-    margin-bottom: 16px;
-}
-
-.skill-category ul {
-    list-style: none;
-}
-
-.skill-category li {
-    color: var(--text-muted);
-    margin-bottom: 8px;
+/* --- 1. HERO SECTION (PRESERVED) --- */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #000000 0%, #111111 100%);
+    padding: 0 5%;
     position: relative;
-    padding-left: 16px;
-}
-
-.skill-category li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-}
-
-/* --- 5. CASE STUDY (VALTRA) --- */
-.case-study {
-    padding: 120px 0;
-    background: #0f0f0f;
-}
-
-.case-header {
-    width: 100%;
-    height: 60vh;
-    background: #222;
-    margin-bottom: 60px;
     overflow: hidden;
-    position: relative;
 }
 
-.case-header img {
+.hero-container {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    gap: 3vw;
+    max-width: 1600px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    align-items: center;
 }
 
-.case-content-grid {
+.hero-text {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 2;
+    animation: fadeUp 1s ease-out forwards;
+}
+
+.hero-name {
+    font-size: clamp(24px, 3vw, 42px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-size: clamp(40px, 5vw, 80px);
+    line-height: 1;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.text-accent { color: var(--accent); }
+
+.hero-description {
+    font-size: 1.1rem;
+    color: #ccc;
+    max-width: 480px;
+    margin-bottom: 3rem;
+}
+
+.scroll-indicator {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+    animation: fadeUp 1s ease-out 0.5s forwards;
+}
+
+.hero-image-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out 0.2s forwards;
+}
+@media (min-width: 1024px) {
+    .hero-image-wrapper { padding-bottom: 50px; padding-left: 20px; }
+}
+.hero-img {
+    height: 85vh;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5));
+}
+
+/* --- 2. TRACTOR SECTION --- */
+.tractor-section {
+    background: #000;
+    padding: 100px 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+.s-tractor-visual {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+.tractor-still {
+    max-width: 900px;
+    width: 100%;
+    height: auto;
+}
+
+/* Awards Strip */
+.filmstrip-wrapper {
+    width: 100%;
+    overflow: hidden;
+    background: #050505;
+    padding: 24px 0;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+.filmstrip {
+    display: flex;
+    width: max-content;
+    gap: 60px;
+    animation: scroll 30s linear infinite;
+}
+.award-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #888;
+    font-weight: 500;
+}
+.award-item img {
+    height: 32px;
+    width: auto;
+    filter: grayscale(100%) invert(1) brightness(0.6);
+}
+
+/* --- 3. ABOUT & 6. CV SECTIONS --- */
+.about-section, .cv-section {
+    background: var(--bg-dark);
+    padding: 120px 0;
+}
+.about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Sidebar layout */
+    gap: 40px;
+}
+.lead-text {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+.about-content p, .cv-item p {
+    margin-bottom: 24px;
+    color: var(--text-muted);
+}
+.cv-item { margin-bottom: 40px; }
+.cv-item h4 { font-size: 1.2rem; color: white; margin-bottom: 4px; }
+.cv-role { color: var(--accent); font-size: 0.9rem; display: block; margin-bottom: 12px; }
+
+/* --- 4. CASE STUDY --- */
+.case-study-section {
+    background: #0e0e0e; /* Slightly lighter dark */
+    padding: 120px 0;
+}
+.case-study-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
-    margin-bottom: 80px;
+    align-items: center;
 }
-
-.case-intro h2 {
-    font-size: 3rem;
-    margin-bottom: 24px;
+.case-label {
+    display: block;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
 }
+.case-title { font-size: 3rem; line-height: 1.1; margin-bottom: 40px; }
+.case-stats { display: grid; gap: 30px; }
+.stat-block h4 { font-size: 1rem; color: white; margin-bottom: 8px; }
+.stat-block p { font-size: 0.95rem; color: var(--text-muted); }
 
-.case-details h4 {
-    color: var(--text-main);
-    margin-bottom: 12px;
-    margin-top: 32px;
-}
-
-.case-details h4:first-child { margin-top: 0; }
-
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-    background: #000;
-    margin-top: 60px;
-}
-
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-/* --- 6. PROJECTS GRID --- */
+/* --- 5. PROJECTS --- */
 .projects-section {
     padding: 120px 0;
+    background: var(--bg-dark);
 }
-
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 32px;
-    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
-
 .project-card {
     background: var(--bg-card);
     border-radius: 8px;
     overflow: hidden;
-    transition: var(--transition);
     cursor: pointer;
-    group;
 }
-
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.project-img {
-    height: 250px;
-    background: #222;
-    width: 100%;
-    object-fit: cover;
+.project-card:hover { transform: translateY(-5px); }
+.project-thumb {
+    height: 240px;
+    background: #1a1a1a;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #333;
 }
+.project-details { padding: 24px; }
+.project-details h3 { font-size: 1.25rem; margin-bottom: 8px; }
+.project-details p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px; }
+.tag { font-size: 0.8rem; color: var(--accent); text-transform: uppercase; }
 
-.project-info {
-    padding: 24px;
-}
-
-.project-info h3 {
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-}
-
-.project-tags {
-    font-size: 0.85rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 12px;
-}
-
-/* --- 7. AWARDS WALL --- */
-.awards-wall {
-    padding: 100px 0;
-    background: #0f0f0f;
+/* --- 7. FOOTER --- */
+.footer-section {
+    padding: 100px 0 60px;
+    background: radial-gradient(circle at top, #151515, #000);
     text-align: center;
 }
+.footer-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+.footer-cta { font-size: 4rem; margin-bottom: 24px; color: white; }
+.footer-text { max-width: 500px; margin: 0 auto 40px; color: var(--text-muted); }
+.footer-links { margin-bottom: 60px; }
+.copyright { color: #444; font-size: 0.85rem; border-top: 1px solid #222; padding-top: 30px; }
 
-.awards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 40px;
-    margin-top: 40px;
-    align-items: baseline;
+/* --- ANIMATIONS --- */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); } /* Adjusted for 3 sets */
 }
 
-.award-block {
-    padding: 24px;
-    transition: var(--transition);
-    border: 1px solid transparent;
-}
-
-.award-block:hover {
-    background: rgba(255,255,255,0.03);
-    border-color: rgba(255,255,255,0.1);
-    transform: scale(1.05);
-}
-
-.award-logo {
-    height: 60px;
-    width: auto;
-    margin-bottom: 16px;
-    background: #fff; 
-    padding: 5px;
-}
-
-/* --- 8. FOOTER --- */
-.footer {
-    padding: 120px 0 60px;
-    text-align: center;
-    background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 70%);
-}
-
-.footer h2 {
-    font-size: 4rem;
-    margin-bottom: 24px;
-}
-
-.footer-desc {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto 40px;
-}
-
-.contact-links {
-    margin-bottom: 40px;
-}
-
-.footer-bottom {
-    margin-top: 80px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .about-grid, .case-content-grid, .cv-grid {
+/* --- RESPONSIVE BREAKPOINTS --- */
+@media (max-width: 1024px) {
+    .hero-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        text-align: center;
+        padding-top: 80px;
+        display: flex; flex-direction: column; gap: 40px;
     }
+    .hero-text { align-items: center; order: 1; }
+    .hero-image-wrapper { justify-content: center; order: 2; padding: 0; }
+    .hero-img { height: auto; max-height: 50vh; }
     
-    h1 { font-size: 3rem; }
-    .hero-subtitle { font-size: 1.5rem; }
-    .case-intro h2 { font-size: 2rem; }
-    .footer h2 { font-size: 2.5rem; }
-    
-    .hero-portrait {
-        object-position: center top; 
-    }
+    .about-grid, .case-study-grid { grid-template-columns: 1fr; gap: 40px; }
+    .lead-text { font-size: 1.2rem; }
 }
 
-.gsap-fade-up {
-    opacity: 0;
-    transform: translateY(40px);
+@media (max-width: 768px) {
+    .footer-cta { font-size: 2.5rem; }
+    .hero-title { font-size: 2.5rem; }
+    .section-heading { font-size: 1.75rem; }
 }
