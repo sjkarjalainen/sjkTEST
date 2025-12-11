@@ -87,92 +87,103 @@ a {
 
 /* --- HERO SECTION LAYOUT --- */
 .hero-section {
-  min-height: 100vh; /* Full viewport height */
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff; /* Or your site's bg color */
-  padding: 0 5%; /* Horizontal breathing room */
+  /* Premium Dark Gradient Background */
+  background: linear-gradient(180deg, #000000 0%, #111111 100%);
+  color: #ffffff; /* Default text color switched to white */
+  padding: 0 5%;
   overflow: hidden;
+  position: relative;
 }
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1.2fr 1fr; /* Text takes slightly more space for balance */
-  gap: 4rem;
-  max-width: 1400px;
+  /* 45% Text / 55% Image split for visual balance with large portrait */
+  grid-template-columns: 0.8fr 1fr; 
+  gap: 5vw; /* Responsive gap */
+  max-width: 1600px; /* Increased max-width for "generous spacing" */
   width: 100%;
-  align-items: center; /* Vertically centers text vs image */
+  height: 100vh; /* Lock container to viewport height for layout stability */
+  align-items: center;
 }
 
 /* --- TEXT COLUMN (LEFT) --- */
 .hero-text {
-  text-align: right; /* Aligns text block to the right side of its column */
+  text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end; /* Ensures flex children align right */
+  align-items: flex-end;
+  z-index: 2; /* Ensures text stays above image if they overlap slightly */
   animation: fadeUp 1s ease-out forwards;
-  opacity: 0; /* Start hidden for animation */
+  opacity: 0;
 }
 
 .hero-name {
-  font-size: 1rem; /* Eyebrow text size */
-  letter-spacing: 0.15em;
+  /* Responsive Scaling: Min 24px, Preferred 3vw, Max 48px */
+  font-size: clamp(24px, 3vw, 48px);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #333;
-  margin-bottom: 1rem;
+  color: #888888; /* Muted grey for the name */
+  margin-bottom: 1.5rem;
   display: inline-block;
-  border-bottom: 2px solid #333; /* Optional stylistic line */
-  padding-bottom: 0.5rem;
 }
 
 .hero-title {
-  font-size: 3.5rem; /* Large headline */
+  /* Responsive Scaling: Min 36px, Preferred 5vw, Max 80px */
+  font-size: clamp(36px, 5vw, 80px);
   line-height: 1.1;
   font-weight: 800;
-  color: #1a1a1a;
-  margin: 0 0 1.5rem 0;
-  max-width: 600px; /* Prevents lines getting too long */
+  color: #ffffff;
+  margin: 0 0 2rem 0;
+  max-width: 800px;
 }
 
 .text-accent {
-  color: #FF5722; /* Your Orange Accent Color */
+  color: #FF5722; /* Keeps your brand orange */
 }
 
 .hero-description {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: #666;
-  max-width: 450px; /* Limits width for readability */
-  margin-bottom: 3rem;
+  /* Responsive Scaling: Min 16px, Preferred 1.2vw, Max 20px */
+  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1.7;
+  color: #cccccc; /* Light grey for readability on dark bg */
+  max-width: 480px;
+  margin-bottom: 4rem;
   font-weight: 400;
 }
 
 .scroll-indicator {
   font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  color: #888;
-  opacity: 0; /* Handled by delay animation */
+  letter-spacing: 0.1em;
+  color: #555555;
+  text-transform: uppercase;
+  opacity: 0;
   animation: fadeUp 1s ease-out 0.5s forwards;
 }
 
 /* --- IMAGE COLUMN (RIGHT) --- */
 .hero-image-wrapper {
+  height: 100%;
   display: flex;
-  justify-content: center; /* Centers image in its column */
-  align-items: center;
+  justify-content: center; /* Center horizontally in column */
+  align-items: flex-end; /* Align image to bottom of container */
   opacity: 0;
-  animation: fadeIn 1.2s ease-out 0.3s forwards;
+  animation: fadeIn 1.5s ease-out 0.2s forwards;
 }
 
 .hero-img {
-  width: 100%;
-  max-width: 500px; /* Prevents image from getting massive on huge screens */
-  height: auto;
+  /* 85% of Viewport Height on Desktop */
+  height: 85vh; 
+  width: auto; /* Maintain aspect ratio */
+  max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0px 20px 40px rgba(0,0,0,0.1)); /* Premium soft shadow */
+  /* Subtle drop shadow to lift image off the dark background */
+  filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5)); 
 }
 
 /* --- ANIMATIONS --- */
@@ -182,48 +193,59 @@ a {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
+  from { opacity: 0; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
 }
 
 /* --- RESPONSIVE (TABLET & MOBILE) --- */
 @media (max-width: 1024px) {
   .hero-container {
-    gap: 2rem;
-    grid-template-columns: 1fr 1fr;
+    height: auto;
+    min-height: 100vh;
+    padding-top: 60px;
+    align-items: center;
   }
-  .hero-title {
-    font-size: 2.5rem;
+  
+  .hero-img {
+    height: 60vh; /* Smaller image height on tablet */
   }
 }
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: 100px 20px 60px; /* Add top padding for mobile header */
+    padding: 80px 20px 40px;
+    height: auto;
     min-height: auto;
   }
 
   .hero-container {
     display: flex;
-    flex-direction: column-reverse; /* Stack: Image top, Text bottom? Or normal? */
-    /* User requested: "Stack elements vertically, centered text and image" */
-    flex-direction: column; 
-    text-align: center;
+    flex-direction: column; /* Stack vertically */
     gap: 3rem;
+    height: auto;
   }
 
   /* Reset alignment for mobile */
   .hero-text {
     text-align: center;
     align-items: center;
+    order: 1; /* Text first */
+  }
+  
+  .hero-image-wrapper {
+    order: 2; /* Image second */
+    width: 100%;
+    align-items: center;
   }
 
   .hero-name {
-    border-bottom: none; /* Cleaner on mobile */
+    margin-bottom: 1rem;
+    font-size: 14px; /* Fixed small size for mobile eyebrow */
   }
 
   .hero-title {
-    font-size: 2rem;
+    /* Slightly larger minimum for mobile impact */
+    font-size: clamp(32px, 8vw, 48px); 
     max-width: 100%;
   }
 
@@ -232,7 +254,10 @@ a {
   }
   
   .hero-img {
-    max-width: 300px; /* Smaller image on mobile */
+    height: auto;
+    width: 100%;
+    max-width: 350px; /* Cap image width on mobile */
+    max-height: 50vh;
   }
 }
 
