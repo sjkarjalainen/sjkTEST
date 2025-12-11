@@ -120,6 +120,14 @@ a {
     display: block;
 }
 
+.hero-image {
+    /* Scales the image up by 25% */
+    transform: scale(1.25); 
+    
+    /* Optional: ensures the image doesn't overflow its box */
+    transform-origin: center center; 
+}
+
 /* Dark overlay to ensure text legibility on top of image */
 .hero-overlay {
     position: absolute;
