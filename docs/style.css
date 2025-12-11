@@ -280,18 +280,46 @@ a {
     animation: fadeIn 1.5s ease-out forwards;
 }
 
-/* --- FILMSTRIP (Kept mostly the same) --- */
-.filmstrip-wrapper {
-    width: 100%;
-    overflow: hidden;
-    background: rgba(255,255,255,0.05);
-    padding: 24px 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+/* --- AWARDS STRIP STYLING --- */
+
+.award-item {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Space between logo and text */
     
-    /* Ensures it sits above any potential background elements */
-    position: relative; 
-    z-index: 2;
+    /* Monochrome Color for Text */
+    color: #888888; 
+    
+    font-weight: 500;
+    font-size: 1rem; /* Adjust text size */
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.award-item img {
+    height: 32px; /* Fixed height for consistent logo size */
+    width: auto;  /* Auto width to maintain aspect ratio */
+    
+    /* THE MONOCHROME FILTER:
+       1. grayscale(100%): Removes all color (Red Dot becomes grey).
+       2. invert(1): Turns dark/black parts of logos into white.
+       3. brightness(0.6): Dims the bright white down to a premium grey (#888).
+    */
+    filter: grayscale(100%) invert(1) brightness(0.6);
+    
+    transition: filter 0.3s ease;
+}
+
+/* Optional: Subtle hover effect to highlight the award */
+.award-item:hover {
+    color: #ffffff; /* Text turns white */
+}
+
+.award-item:hover img {
+    /* Logo turns white/original on hover */
+    filter: grayscale(0%) invert(0) brightness(1.2); 
+    /* OR keep it monochrome but brighter: */
+    /* filter: grayscale(100%) invert(1) brightness(1); */
 }
 
 /* Responsive Tweaks */
