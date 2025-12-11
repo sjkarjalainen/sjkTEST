@@ -114,18 +114,10 @@ a {
 
 .hero-portrait {
     width: 100%;
-    height: 100%;          /* Changed from 120% to 100% to stop the vertical crop */
+    height: 120%;          /* Changed from 120% to 100% to stop the vertical crop */
     object-fit: contain;   /* Changed from cover. This ensures the WHOLE image is seen */
-    object-position: bottom center; /* Aligns image to bottom */
+    object-position: top center; /* Aligns image to bottom */
     display: block;
-}
-
-.hero-image {
-    /* Scales the image up by 25% */
-    transform: scale(1.25); 
-    
-    /* Optional: ensures the image doesn't overflow its box */
-    transform-origin: center center; 
 }
 
 /* Dark overlay to ensure text legibility on top of image */
