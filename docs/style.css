@@ -201,53 +201,170 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
     filter: grayscale(100%) invert(1) brightness(0.6);
 }
 
-/* --- 3. ABOUT & 6. CV SECTIONS --- */
-.about-section, .cv-section {
-    background: var(--bg-dark);
+/* --- 3. ABOUT SECTION --- */
+.about-section {
+    background: white;
+    color: var(--bg-dark);
     padding: 120px 0;
 }
+
 .about-grid {
     display: grid;
-    grid-template-columns: 200px 1fr; /* Sidebar layout */
-    gap: 40px;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
 }
-.lead-text {
-    font-size: 1.5rem;
-    color: white;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-.about-content p, .cv-item p {
-    margin-bottom: 24px;
-    color: var(--text-muted);
-}
-.cv-item { margin-bottom: 40px; }
-.cv-item h4 { font-size: 1.2rem; color: white; margin-bottom: 4px; }
-.cv-role { color: var(--accent); font-size: 0.9rem; display: block; margin-bottom: 12px; }
 
-/* --- 4. CASE STUDY --- */
-.case-study-section {
-    background: #0e0e0e; /* Slightly lighter dark */
-    padding: 120px 0;
+.section-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    font-weight: 700;
 }
-.case-study-grid {
+
+.about-text p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 32px;
+    font-weight: 400;
+}
+
+.about-text p.small {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* --- 4. CV SECTION --- */
+.cv-section {
+    padding: 120px 0;
+    background: var(--bg-dark);
+}
+
+.cv-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 40px;
+    margin-bottom: 80px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 80px;
+}
+
+.cv-grid:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.cv-item {
+    margin-bottom: 40px;
+}
+
+.cv-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.cv-meta {
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.cv-desc {
+    color: var(--text-muted);
+    max-width: 700px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    width: 100%;
+}
+
+.skill-category h4 {
+    color: var(--accent);
+    margin-bottom: 16px;
+}
+
+.skill-category ul {
+    list-style: none;
+}
+
+.skill-category li {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.skill-category li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* --- 5. CASE STUDY (VALTRA) --- */
+.case-study {
+    padding: 120px 0;
+    background: #0f0f0f;
+}
+
+.case-header {
+    width: 100%;
+    height: 60vh;
+    background: #222;
+    margin-bottom: 60px;
+    overflow: hidden;
+    position: relative;
+}
+
+.case-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.case-content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
-    align-items: center;
+    margin-bottom: 80px;
 }
-.case-label {
-    display: block;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    margin-bottom: 16px;
+
+.case-intro h2 {
+    font-size: 3rem;
+    margin-bottom: 24px;
 }
-.case-title { font-size: 3rem; line-height: 1.1; margin-bottom: 40px; }
-.case-stats { display: grid; gap: 30px; }
-.stat-block h4 { font-size: 1rem; color: white; margin-bottom: 8px; }
-.stat-block p { font-size: 0.95rem; color: var(--text-muted); }
+
+.case-details h4 {
+    color: var(--text-main);
+    margin-bottom: 12px;
+    margin-top: 32px;
+}
+
+.case-details h4:first-child { margin-top: 0; }
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    background: #000;
+    margin-top: 60px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 
 /* --- 5. PROJECTS --- */
 .projects-section {
